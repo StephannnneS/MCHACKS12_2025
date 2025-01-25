@@ -20,4 +20,16 @@ class User:
 
         return bmi
     
-    
+    def is_number():
+        try:
+            float(input)
+            return True
+        except ValueError:
+            return False
+        
+    def is_valid_name():
+        name = input("Enter your name: ")
+        if name.isalpha():
+            return True
+        else:
+            return False
