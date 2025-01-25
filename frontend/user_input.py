@@ -6,6 +6,20 @@ from kivy.uix.button import Button
 from kivy.uix.spinner import Spinner
 
 
+
+
+def submit_data(self, instance):
+        """Handles submission of user data."""
+        age = self.age_input.text
+        sex = self.sex_input.text
+        height = self.height_input.text
+        weight = self.weight_input.text
+
+
+        self.manager.current = "home"
+
+
+
 class UserInputScreen(Screen):
     def __init__(self, **kwargs):
         super(UserInputScreen, self).__init__(**kwargs)
@@ -33,7 +47,15 @@ class UserInputScreen(Screen):
         layout.add_widget(Label(text="Weight (kg):"))
         layout.add_widget(self.weight_input)
         
-       
+        submit_button = Button(text="Submit", size_hint=(1, 0.2))
+        submit_button.bind(on_press=self.submit_data)
+        layout.add_widget(submit_button)
         
         # Add layout to the screen
         self.add_widget(layout)
+
+
+
+
+
+
