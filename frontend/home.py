@@ -38,14 +38,15 @@ class HomeScreen(Screen):
 
 
 
-    def update_info(self, age, sex, height, weight):
+    def update_info(self, age, sex, height, weight, goal_weight):
         """Update the screen with user-provided data."""
         self.info_label.text = (
             f"User Information:\n"
             f"Age: {age}\n"
             f"Sex: {sex}\n"
             f"Height: {height} cm\n"
-            f"Weight: {weight} kg"
+            f"Weight: {weight} kg\n"
+            f"GOAL Weight: {goal_weight} kg"
         )
 
 

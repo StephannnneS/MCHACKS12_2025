@@ -43,9 +43,9 @@ class UserInputScreen(Screen):
         layout.add_widget(self.weight_input)
 
 
-        self.weight_input = TextInput(hint_text="Enter your GOAL weight (kg)", multiline=False, input_filter="float")
+        self.goal_weight_input = TextInput(hint_text="Enter your GOAL weight (kg)", multiline=False, input_filter="float")
         layout.add_widget(Label(text="GOAL Weight (kg):", bold=True, font_size="25sp"))
-        layout.add_widget(self.weight_input)
+        layout.add_widget(self.goal_weight_input)
 
         
         submit_button = Button(text="Submit", size_hint=(2, 0.7), bold=True)
@@ -61,10 +61,11 @@ class UserInputScreen(Screen):
         sex = self.sex_input.text
         height = self.height_input.text
         weight = self.weight_input.text
+        goal_weight = self.goal_weight_input.text
 
 
         home_screen = self.manager.get_screen("home")
-        home_screen.update_info(age, sex, height, weight)
+        home_screen.update_info(age, sex, height, weight, goal_weight)
 
 
 
