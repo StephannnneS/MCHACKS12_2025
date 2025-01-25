@@ -41,8 +41,14 @@ class UserInputScreen(Screen):
         self.weight_input = TextInput(hint_text="Enter your weight (kg)", multiline=False, input_filter="float")
         layout.add_widget(Label(text="Weight (kg):", bold=True, font_size="25sp"))
         layout.add_widget(self.weight_input)
+
+
+        self.weight_input = TextInput(hint_text="Enter your GOAL weight (kg)", multiline=False, input_filter="float")
+        layout.add_widget(Label(text="GOAL Weight (kg):", bold=True, font_size="25sp"))
+        layout.add_widget(self.weight_input)
+
         
-        submit_button = Button(text="Submit", size_hint=(2, 0.7))
+        submit_button = Button(text="Submit", size_hint=(2, 0.7), bold=True)
         submit_button.bind(on_press=self.submit_data)
         layout.add_widget(submit_button)
         
