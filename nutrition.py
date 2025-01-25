@@ -1,7 +1,7 @@
 import kivy
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager
-from screens import WelcomeScreen, InputScreen
+from user_input import UserInputScreen
 
 kivy.require('1.9.0')
 
@@ -10,17 +10,18 @@ class MyScreenManager(ScreenManager):
     pass
 
 
-class CalculatorApp(App):
+class NutritionApp(App):
     def build(self):
-        sm = MyScreenManager()  
+        sm = MyScreenManager()
         
-        sm.add_widget(WelcomeScreen(name="welcome"))  # Assign a unique name to the screen
-        sm.add_widget(InputScreen(name="calculator"))
-        return sm  # Return the ScreenManager as the root widget
+        # Add the UserInputScreen to the ScreenManager
+        sm.add_widget(UserInputScreen(name="user_input"))
+        
+        return sm
     
 
 if __name__ == "__main__":
-    CalculatorApp().run()
+    NutritionApp().run()
 
 
 
