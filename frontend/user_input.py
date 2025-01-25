@@ -8,15 +8,7 @@ from kivy.uix.spinner import Spinner
 
 
 
-def submit_data(self, instance):
-        """Handles submission of user data."""
-        age = self.age_input.text
-        sex = self.sex_input.text
-        height = self.height_input.text
-        weight = self.weight_input.text
 
-
-        self.manager.current = "home"
 
 
 
@@ -53,6 +45,16 @@ class UserInputScreen(Screen):
         
         # Add layout to the screen
         self.add_widget(layout)
+
+    def submit_data(self, instance):
+        """Handles submission of user data."""
+        age = self.age_input.text
+        sex = self.sex_input.text
+        height = self.height_input.text
+        weight = self.weight_input.text
+
+
+        self.manager.current = "home"
 
 
 
