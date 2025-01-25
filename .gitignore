@@ -1,3 +1,13 @@
+
+#Database files
+*.db
+
+
+#Venv files
+.venv/
+
+
+
 # Gradle files
 .gradle/
 build/
