@@ -29,7 +29,7 @@ class UserInputScreen(Screen):
 
 
         header_label = Label(
-            text="Health Goals Input",
+            text="Health Goals",
             font_size="32sp",
             bold=True,
             color=(0.1, 0.4, 0.6, 1),  # Dark blue color

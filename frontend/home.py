@@ -8,7 +8,7 @@ class HomeScreen(Screen):
     def __init__(self, **kwargs):
         super(HomeScreen, self).__init__(**kwargs)
 
-        self.layout = BoxLayout(orientation='vertical', padding=20, spacing=10)
+        self.layout = BoxLayout(orientation='vertical', padding=[20, 100, 20, 20], spacing=10)
 
     
         
@@ -45,9 +45,23 @@ class HomeScreen(Screen):
         self.layout.add_widget(button)
         self.add_widget(self.layout)
 
+
+        button_back = Button(
+            text='Go Back',
+            size_hint=(0.3, 0.1),
+            pos_hint={'center_x': 0.5, 'center_y': 0.5}
+        )
+        button_back.bind(on_press=self.switch_to_user_input)
+        self.layout.add_widget(button_back)
+
     
     def switch_to_calculator(self, instance):
             self.manager.current = 'calculator' 
+
+
+    def switch_to_user_input(self, instance):
+        """Switch to the UserInputScreen."""
+        self.manager.current = 'user_input'
 
 
 
