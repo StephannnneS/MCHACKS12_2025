@@ -1,17 +1,21 @@
 from kivy.uix.screenmanager import Screen
 from kivy.uix.label import Label
+from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
+ 
 
 class HomeScreen(Screen):
     def __init__(self, **kwargs):
         super(HomeScreen, self).__init__(**kwargs)
-        
+
         self.layout = BoxLayout(orientation='vertical', padding=20, spacing=10)
+
+    
         
 
 
         self.welcome_label = Label(
-            text="Hello!",
+            text="Personal Information",
             font_size='40sp',
             bold=True,
             halign="center",
@@ -32,8 +36,19 @@ class HomeScreen(Screen):
         self.info_label.bind(size=self.info_label.setter('text_size'))  # Enable text wrapping
         self.layout.add_widget(self.info_label)
 
-        # Add layout to the screen
+        button = Button(
+            text='Start Calculating',
+            size_hint=(0.3, 0.1),
+            pos_hint={'center_x': 0.5, 'center_y': 0.5}
+        )
+        button.bind(on_press=self.switch_to_calculator)
+        self.layout.add_widget(button)
         self.add_widget(self.layout)
+
+    
+    def switch_to_calculator(self, instance):
+            self.manager.current = 'calculator' 
+
 
 
 
@@ -48,6 +63,8 @@ class HomeScreen(Screen):
             f"Weight: {weight} kg\n"
             f"GOAL Weight: {goal_weight} kg"
         )
+
+
 
 
 
