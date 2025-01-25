@@ -22,24 +22,24 @@ class UserInputScreen(Screen):
 
         # Sex input (dropdown)
         self.sex_input = Spinner(text="Select sex", values=("Male", "Female", "Other"))
-        layout.add_widget(Label(text="[b]Sex:[/b]", bold=True, font_size="25sp"))
+        layout.add_widget(Label(text="Sex:", bold=True, font_size="25sp"))
         layout.add_widget(self.sex_input)
 
         
         # Age input
         self.age_input = TextInput(hint_text="Enter your age", multiline=False, input_filter="int")
-        layout.add_widget(Label(text="[b]Age:[/b]", bold=True, font_size="25sp"))
+        layout.add_widget(Label(text="Age:", bold=True, font_size="25sp"))
         layout.add_widget(self.age_input)
         
         
         # Height input
         self.height_input = TextInput(hint_text="Enter your height (cm)", multiline=False, input_filter="float")
-        layout.add_widget(Label(text="[b]Height (cm):[/b]", bold=True, font_size="25sp"))
+        layout.add_widget(Label(text="Height (cm):", bold=True, font_size="25sp"))
         layout.add_widget(self.height_input)
 
          # Weight input
         self.weight_input = TextInput(hint_text="Enter your weight (kg)", multiline=False, input_filter="float")
-        layout.add_widget(Label(text="[b]Weight (kg):[/b]", bold=True, font_size="25sp"))
+        layout.add_widget(Label(text="Weight (kg):", bold=True, font_size="25sp"))
         layout.add_widget(self.weight_input)
         
         submit_button = Button(text="Submit", size_hint=(2, 0.7))

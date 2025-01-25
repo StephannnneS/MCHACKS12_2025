@@ -11,7 +11,7 @@ class HomeScreen(Screen):
 
 
         self.welcome_label = Label(
-            text="Welcome!",
+            text="Hello!",
             font_size='40sp',
             bold=True,
             halign="center",
@@ -41,7 +41,6 @@ class HomeScreen(Screen):
     def update_info(self, age, sex, height, weight):
         """Update the screen with user-provided data."""
         self.info_label.text = (
-            f"Welcome:\n"
             f"User Information:\n"
             f"Age: {age}\n"
             f"Sex: {sex}\n"
