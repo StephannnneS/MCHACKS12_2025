@@ -16,9 +16,9 @@ class WelcomeScreen(Screen):
         self.add_widget(layout)
 
 
-class CalculatorScreen(Screen):
+class InputScreen(Screen):
     def __init__(self, **kwargs):
-        super(CalculatorScreen, self).__init__(**kwargs)
+        super(InputScreen, self).__init__(**kwargs)
         layout = BoxLayout()
         layout.add_widget(Label(text="Calculator Screen"))
         self.add_widget(layout)
