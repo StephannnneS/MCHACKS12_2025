@@ -134,4 +134,12 @@ class Calorie_calculator:
     def __init__(self, food_name, quantity):
 
 
+
+class Meal: 
+    def _init__(self, food_name, quantity):
+        self.food_name = food_name
+        self.quantity = quantity
+        
+
+
         
