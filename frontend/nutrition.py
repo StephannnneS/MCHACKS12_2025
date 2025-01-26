@@ -36,7 +36,7 @@ class NutritionApp(App):
 
         sm.add_widget(SummaryScreen(name="result"))
 
-        sm.add_widget(ByeScreen(name="final"))
+        sm.add_widget(SummaryScreen(name="calculator1"))
 
         return sm
 
