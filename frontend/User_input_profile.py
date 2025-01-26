@@ -176,7 +176,7 @@ class User:
 
 class Calorie_calculator:
     def __init__(self, food_name, quantity):
-        pass
+        
 
 
 class Meal: 
@@ -208,8 +208,4 @@ class Meal:
         
 
 
-choice = Food("Chewy", "Branded")
-print(choice.food_choices)
-
-choice.get_nutrient_info(choice.food_choices[0])
-print(choice.nutrients)
+   
