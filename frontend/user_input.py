@@ -71,7 +71,7 @@ class UserInputScreen(Screen):
         layout.add_widget(self.goal_weight_input)
 
         
-        submit_button = Button(text="Submit", size_hint=(0.4, 0.1), pos_hint={'center_x': 0.5,}, bold=True
+        submit_button = Button(text="Submit", size_hint=(0.4, 0.8), pos_hint={'center_x': 0.5,}, bold=True
                                ,background_color=(0.2, 0.7, 0.5, 1),  color=(1, 1, 1, 1))
         submit_button.bind(on_press=self.submit_data)
         layout.add_widget(submit_button)

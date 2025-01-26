@@ -2,11 +2,18 @@ from kivy.uix.screenmanager import Screen
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
+from kivy.graphics import Color, Rectangle
  
 
 class HomeScreen(Screen):
     def __init__(self, **kwargs):
         super(HomeScreen, self).__init__(**kwargs)
+
+        with self.canvas.before:
+            Color(0.1, 0.6, 0.8, 1)  # Light blue background
+            self.bg = Rectangle(size=self.size, pos=self.pos)
+            self.bind(size=self._update_bg, pos=self._update_bg)
+
 
         self.layout = BoxLayout(orientation='vertical', padding=[20, 100, 20, 20], spacing=10)
 
@@ -62,6 +69,12 @@ class HomeScreen(Screen):
     def switch_to_user_input(self, instance):
         """Switch to the UserInputScreen."""
         self.manager.current = 'user_input'
+
+
+    def _update_bg(self, *args):
+        """Update the background when the window resizes."""
+        self.bg.size = self.size
+        self.bg.pos = self.pos
 
 
 

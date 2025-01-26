@@ -164,16 +164,14 @@ class CalculatorScreen(Screen):
 
 
     def handle_button_click(self, instance, popup, index, value1, value2):
-        extra_info = self.get_the_food_info(value1, value2, index)
-
-        extra_info_str = f" - Extra Info: {extra_info}" if extra_info else ""
+        
 
         if self.selected_item_label.text == "Selected item will appear here":
         # Replace the placeholder text with the first item and its info
-            self.selected_item_label.text = f"Selected Item:{instance.text}{extra_info_str}"
+            self.selected_item_label.text = f"Selected Item:{instance.text}"
         else:
         # Append to the existing text
-            self.selected_item_label.text += f"\nSelected Item: {instance.text}{extra_info_str}"
+            self.selected_item_label.text += f"\nSelected Item: {instance.text}"
 
         popup.dismiss()
 
