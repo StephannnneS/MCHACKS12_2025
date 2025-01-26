@@ -5,6 +5,7 @@ from user_input import UserInputScreen
 from home import HomeScreen
 from welcome import WelcomeScreen
 from calculator import CalculatorScreen
+from result import *
 
 kivy.require('1.9.0')
 
@@ -30,6 +31,8 @@ class NutritionApp(App):
 
 
         sm.add_widget(CalculatorScreen(name="calculator"))
+
+        sm.add_widget(ResultScreen(name="result"))
 
 
         return sm
