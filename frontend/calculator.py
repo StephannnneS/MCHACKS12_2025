@@ -28,7 +28,7 @@ class CalculatorScreen(Screen):
 
 
         breakfast_label = Label(
-            text="Breakfast Menu",
+            text="Day Menu",
             font_size="25sp",
             bold=True,
             pos_hint={'center_x': 0.5, 'y': 0.9},  # Position near the top
@@ -60,7 +60,7 @@ class CalculatorScreen(Screen):
 
         self.selected_item_label = Label(
             text="Selected item will appear here",
-            font_size="10sp",
+            font_size="12sp",
             size_hint=(0.8, 0.1),
             bold = True,
             pos_hint={'center_x': 0.5, 'y': 0.5}  # Position at the center

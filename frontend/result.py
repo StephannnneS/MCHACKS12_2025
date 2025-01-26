@@ -10,19 +10,19 @@ class SummaryScreen(Screen):
     def __init__(self, **kwargs):
         super(SummaryScreen, self).__init__(**kwargs)
 
-        layout = FloatLayout()
+        self.layout = FloatLayout()
 
         # Initialize Meal object
         self.breakfast = Meal("Breakfast")
-        self.layout = FloatLayout()
         self.current_index = 0  # Track the current dictionary being displayed
         self.data = []  # Store dictionaries
+        self.extra_click_allowed = False  # Track if one extra click is allowed after processing items
 
         # Label to display the current dictionary
         self.data_label = Label(
             text="No data yet.",
             font_size="16sp",
-            bold = True,
+            bold=True,
             size_hint=(0.9, 0.1),
             pos_hint={'center_x': 0.5, 'y': 0.9},
             halign="left"
@@ -34,63 +34,46 @@ class SummaryScreen(Screen):
             hint_text="Enter weight in grams...",
             multiline=False,
             size_hint=(0.8, 0.1),
-            pos_hint={'center_x': 0.5, 'y':0.8}
+            pos_hint={'center_x': 0.5, 'y': 0.8}
         )
         self.layout.add_widget(self.weight_input)
 
-        # Button to save input and move to the next dictionary
+        # Next button to process items or calculate
         self.next_button = Button(
             text="Next",
             size_hint=(0.3, 0.1),
-            pos_hint={'center_x': 0.5, 'center_y': 0.7}
+            pos_hint={'center_x': 0.5, 'y': 0.7}
         )
-        self.next_button.bind(on_press=self.next_item)
+        self.next_button.bind(on_press=self.next_item_or_calculate)
         self.layout.add_widget(self.next_button)
 
         # Label to display cumulative nutrients after all entries
         self.nutrient_label = Label(
-            text="Nutrient info will appear here after all items are processed.",
+            text="Overall Nutrition will appear here after processing.",
             font_size="14sp",
-            size_hint=(0.7, 0.2),
-            pos_hint={'center_x': 0.5, 'center_y': 0.45},
-            halign = "center"
+            size_hint=(0.9, 0.3),
+            pos_hint={'center_x': 0.5, 'center_y': 0.3},
+            halign="center"
         )
         self.nutrient_label.bind(size=self.nutrient_label.setter('text_size'))  # Enable text wrapping
         self.layout.add_widget(self.nutrient_label)
 
-        self.add_widget(self.layout)
-
-
-
+        # Submit button to go to the next page
         submit_button = Button(
-            text="Next",             # Button label
-            size_hint=(0.2, 0.1),      # Button size (adjust as needed)
-            pos_hint={'right': 1, 'y': 0}  # Bottom-right corner
+            text="Submit",
+            size_hint=(0.2, 0.1),
+            pos_hint={'x': 0.8, 'y': 0.05}  # Bottom-right corner
         )
-        submit_button.bind(on_press=self.go_to_next)
-        layout.add_widget(submit_button)
+        submit_button.bind(on_press=self.go_to_next_page)
+        self.layout.add_widget(submit_button)
 
-        
-
-        
-
-
-
-    def go_to_next(self, instance):
-        # Get the ScreenManager and navigate to the SummaryScreen
-        screen_manager = self.manager
-        summary_screen = screen_manager.get_screen("calculator1")
-        summary_screen.update_data(self.selected_food_data)
-        screen_manager.current = "calculator1"
-
-
-
-
+        self.add_widget(self.layout)
 
     def update_data(self, selected_data):
         # Update the data list and reset the index
         self.data = selected_data
         self.current_index = 0
+        self.extra_click_allowed = False  # Reset the extra click flag
 
         # Display the first dictionary
         self.display_current_item()
@@ -105,25 +88,17 @@ class SummaryScreen(Screen):
                 f"Value2: {current_data['value2']}"
             )
             self.weight_input.text = ""  # Clear the input field
+        elif self.current_index == len(self.data):
+            # Allow one final click to calculate overall nutrition
+            self.data_label.text = "Click Next to calculate overall nutrition."
+            self.extra_click_allowed = True  # Allow one more click
+            self.weight_input.text = ""  # Clear the input field
         else:
-            # Ensure nutrients are populated for all foods in breakfast
-            for food_item, _ in self.breakfast.foods:
-                if not hasattr(food_item, 'nutrients') or not food_item.nutrients:
-                    if food_item.food_choices:
-                        food_item.get_nutrient_info(food_item.food_choices[0])
+            # Disable the Next button when everything is done
+            self.next_button.disabled = True
+            self.data_label.text = "All items processed. You can submit now."
 
-            # Process and display cumulative nutrients for breakfast
-            self.breakfast.nutrients_counter()
-            nutrient_info = "Breakfast Nutrients:\n"
-            for nutrient, value in self.breakfast.nutrients.items():
-                nutrient_info += f"{nutrient}: {value}\n"
-            self.nutrient_label.text = nutrient_info
-
-            # Clear the data label and input field
-            self.data_label.text = "All items processed."
-            self.weight_input.text = ""
-
-    def next_item(self, instance):
+    def next_item_or_calculate(self, instance):
         if self.current_index < len(self.data):
             # Get the weight input from the user
             weight = self.weight_input.text.strip()
@@ -138,6 +113,34 @@ class SummaryScreen(Screen):
             else:
                 print("Invalid weight. Please enter a numeric value.")
 
-        # Move to the next dictionary
-        self.current_index += 1
-        self.display_current_item()
+            # Move to the next dictionary
+            self.current_index += 1
+            self.display_current_item()
+        elif self.extra_click_allowed:
+            # Calculate overall nutrition on the final click
+            self.calculate_overall_nutrition()
+            self.extra_click_allowed = False  # Disable further clicks
+
+    def calculate_overall_nutrition(self):
+        # Ensure nutrients are populated for all foods in breakfast
+        for food_item, _ in self.breakfast.foods:
+            if not food_item.food_choices:
+                continue
+            food_item.get_nutrient_info(food_item.food_choices[0])
+
+        # Calculate cumulative nutrients for breakfast
+        self.breakfast.nutrients_counter()
+
+        # Format and display the cumulative nutrient info
+        nutrient_info = "Overall Nutrition:\n"
+        for nutrient, value in self.breakfast.nutrients.items():
+            unit = "N/A"
+            if nutrient in self.breakfast.foods[0][0].nutrients:
+                unit = self.breakfast.foods[0][0].nutrients[nutrient][1]
+            nutrient_info += f"{nutrient}: {value} {unit}\n"
+        self.nutrient_label.text = nutrient_info
+
+    def go_to_next_page(self, instance):
+        # Navigate to the next page
+        screen_manager = self.manager
+        screen_manager.current = "calculator1"
