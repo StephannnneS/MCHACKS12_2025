@@ -83,7 +83,8 @@ class Food:
                     nutrient_info = cursor.execute('SELECT name, unit_Name FROM nutrient WHERE id IS ?', (nutrient[0],)).fetchall()
                     self.nutrients[nutrient_info[0][0]] = (nutrient[1], nutrient_info[0][1])
 
-        
+
+
     
 class Meal: 
     def __init__(self, Moment_of_meal, date = 0 ):
@@ -163,12 +164,4 @@ class Meal:
 
 
     
-dinner = Meal("Dinner")
-dinner.add_food("Beef", "Generic", 300)
-dinner.foods[0][0].get_nutrient_info(dinner.foods[0][0].food_choices[0])
-dinner.add_food("Potato", "Generic", 2000)
-dinner.foods[1][0].get_nutrient_info(dinner.foods[1][0].food_choices[0])
 
-dinner.nutrients_counter()
-
-print(dinner.nutrients)
