@@ -177,12 +177,12 @@ class Meal:
 
 
     
-#dinner = Meal("Dinner")
-#dinner.add_food("Coca-Cola", "Branded", 100)
-#dinner.foods[0][0].get_nutrient_info(dinner.foods[0][0].food_choices[0])
-#dinner.add_food("Potato", "Generic", 2000)
-#dinner.foods[1][0].get_nutrient_info(dinner.foods[1][0].food_choices[0])
+dinner = Meal("Dinner")
+dinner.add_food("Coca-Cola", "Branded", 1)
+dinner.foods[0][0].get_nutrient_info(dinner.foods[0][0].food_choices[0])
+dinner.add_food("Potato", "Generic", 1)
+dinner.foods[1][0].get_nutrient_info(dinner.foods[1][0].food_choices[0])
+dinner.nutrients_counter()
 
-#dinner.nutrients_counter()
-
-#print(dinner.nutrients)
+print(dinner.nutrients)
+print(dinner.foods[0][0].food_choices)
