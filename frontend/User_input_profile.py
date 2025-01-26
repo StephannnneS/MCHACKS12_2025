@@ -142,4 +142,8 @@ class Meal:
         meals = [food_item]
 
 
-   
+choice = Food("Chewy", "Branded")
+print(choice.food_choices)
+
+choice.get_nutrient_info(choice.food_choices[0])
+print(choice.nutrients)
