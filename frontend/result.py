@@ -29,7 +29,7 @@ class SummaryScreen(Screen):
             font_size="15sp",
             bold=True,
             size_hint=(0.4, 0.08),  # Same size as "Recommended:"
-            pos_hint={'x': 0.05, 'y': 0.75},  # Positioned slightly below
+            pos_hint={'x': 0.3, 'y': 0.6},  # Positioned slightly below
         )
         self.layout.add_widget(self.your_nutrition_label)
 
@@ -42,7 +42,7 @@ class SummaryScreen(Screen):
             font_size="15sp",
             bold=True,
             size_hint=(0.2, 0.1),  # Takes 40% width and 10% height
-            pos_hint={'x': 0.011, 'y': 0.6},  # Positioned slightly higher
+            pos_hint={'x': 0.015, 'y': 0.6},  # Positioned slightly higher
             
         )
         self.layout.add_widget(self.recommended_label)
@@ -65,7 +65,7 @@ class SummaryScreen(Screen):
             font_size="16sp",
             bold=True,
             size_hint=(0.9, 0.1),
-            pos_hint={'center_x': 0.5, 'y': 0.9},
+            pos_hint={'center_x': 0.5, 'y': 1.4},
             halign="left"
         )
         self.layout.add_widget(self.data_label)
