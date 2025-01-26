@@ -136,10 +136,13 @@ class Calorie_calculator:
 
 
 class Meal: 
-    def _init__(self, food_name, quantity):
-        self.food_name = food_name
-        self.quantity = quantity
-        
+    def _init__(self, food_name, food_id, nutrients, quantity):
+        food_item = {
+            "food_name": self.food_name,
+            "food_id": self.food_id,
+            "nutrients": self.nutrients
+            }
+        meals = [food_item]
 
 
-        
+   
