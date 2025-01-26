@@ -6,6 +6,7 @@ from kivy.uix.button import Button
 from kivy.uix.spinner import Spinner
 from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Color, Rectangle
+from User_input_profile import *
 
 
 
@@ -100,21 +101,42 @@ class UserInputScreen(Screen):
 
 
 
+    def get_DRI(self, sex, age, height, weight, Goal_weight):
+        user1 = User("User", height, weight, sex, age, 2, Goal_weight)
+        x = user1.DRI
+        return x
+    
+
+
+
+    def send_to_other_file(self, dri_data):
+        """Send DRI data to the SummaryScreen."""
+        summary_screen = self.manager.get_screen("result")
+        summary_screen.update_dri_data(dri_data)
+
+
+
+
+
 
 
 
 
     def submit_data(self, instance):
         """Handles submission of user data."""
-        age = self.age_input.text
+        age = int(self.age_input.text) 
         sex = self.sex_input.text
-        height = self.height_input.text
-        weight = self.weight_input.text
-        goal_weight = self.goal_weight_input.text
+        height = float(self.height_input.text)  # Convert to float
+        weight = float(self.weight_input.text)  # Convert to float
+        goal_weight = float(self.goal_weight_input.text) 
+
+        dri_data = self.get_DRI(sex, age, height, weight, goal_weight)
 
 
         home_screen = self.manager.get_screen("home")
         home_screen.update_info(age, sex, height, weight, goal_weight)
+
+        self.send_to_other_file(dri_data)
 
 
 

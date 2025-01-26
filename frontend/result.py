@@ -12,6 +12,39 @@ class SummaryScreen(Screen):
 
         self.layout = FloatLayout()
 
+
+        self.dri_label = Label(
+            text="No DRI data yet.",
+            font_size="14sp",
+            size_hint=(0.4, 0.8),  # Takes 40% width and 80% height
+            pos_hint={'x': 0.05, 'y': 0.05},  # Positioned on the left
+            halign="left",
+            valign="top",
+        )
+        self.dri_label.bind(size=self.dri_label.setter('text_size'))  # Enable text wrapping
+        self.layout.add_widget(self.dri_label)
+
+
+
+
+
+        self.recommended_label = Label(
+            text="Recommended:",
+            font_size="15sp",
+            bold=True,
+            size_hint=(0.4, 0.1),  # Takes 40% width and 10% height
+            pos_hint={'x': 0.03, 'y': 0.6},  # Positioned slightly higher
+            halign="left",
+            valign="top",
+        )
+        self.layout.add_widget(self.recommended_label)
+
+
+
+
+
+
+
         # Initialize Meal object
         self.breakfast = Meal("Breakfast")
         self.current_index = 0  # Track the current dictionary being displayed
@@ -143,4 +176,14 @@ class SummaryScreen(Screen):
     def go_to_next_page(self, instance):
         # Navigate to the next page
         screen_manager = self.manager
-        screen_manager.current = "calculator1"
+        screen_manager.current = "final"
+
+
+
+
+
+
+    def update_dri_data(self, dri_data):
+        """Update and display DRI data."""
+        formatted_dri = "\n".join([f"{key}: {value}" for key, value in dri_data.items()])
+        self.dri_label.text = f"DRI Data:\n{formatted_dri}"
