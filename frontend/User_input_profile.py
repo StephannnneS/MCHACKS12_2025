@@ -15,6 +15,33 @@ class Food:
                               "1257", "1292", "1258", "1087", "1092", "1089", "2067", "1162", "1175")
     
     def __init__(self, name, food_type):
+        """
+        Initialize a Food object with the given name and food type, and use the name to locate 
+        potential database entries using SQLite.
+
+        Parameters
+        ----------
+        name : str
+            The name of the food to search for.
+        food_type : str
+            The type of food to search for, either "Generic" or "Branded".
+
+        Attributes
+        ----------
+        food_type : str
+            The type of food to search for, either "Generic" or "Branded".
+        food_choices : list
+            A list of tuples, where each tuple contains the fdc_id and description of a potential 
+            database entry that matches the given name and food type. The list is limited to a maximum 
+            of 8 entries.
+
+        Notes
+        -----
+        The SQLite query is constructed based on the given food type. If the food type is "Generic", 
+        the query searches for descriptions that start with the given name. If the food type is "Branded", 
+        the query searches for descriptions that contain the given name anywhere in the string. The 
+        query is limited to a maximum of 8 entries.
+        """
         LIMIT = 8
         self.food_type = food_type
 
@@ -27,6 +54,26 @@ class Food:
                                           ("sr_legacy_food", f"%{name}%", LIMIT)).fetchall()
             
     def get_nutrient_info(self, food_choice_info):
+        """
+        Retrieve nutrient information for a selected food choice and store it in the instance.
+
+        Parameters
+        ----------
+        food_choice_info : tuple
+            A tuple containing the fdc_id and name of the selected food choice.
+
+        Attributes
+        ----------
+        nutrients : dict
+            A dictionary where the keys are nutrient names and the values are tuples containing
+            the amount and the unit name of the nutrient.
+
+        Notes
+        -----
+        Only nutrients whose IDs are in the ESSENTIAL_NUTRIENT_IDS list will be included.
+        Nutrient information is obtained from the database using the fdc_id of the selected food.
+        """
+
         self.nutrients = {}
         self.fdc_id = food_choice_info[0]
         self.name = food_choice_info[1]
@@ -133,13 +180,32 @@ class Calorie_calculator:
 
 
 class Meal: 
-    def _init__(self, food_name, food_id, nutrients, quantity):
-        food_item = {
-            "food_name": self.food_name,
-            "food_id": self.food_id,
-            "nutrients": self.nutrients
-            }
-        meals = [food_item]
+    def _init__(self, Moment_of_meal, date = 0 ):
+
+        Moment_of_meal = self.Moment_of_meal
+        self.foods = []
+    
+
+    def add_food(self, food_name, quantity):
+        
+        """
+        Add a food to the meal.
+
+        Parameters
+        ----------
+        food_name : str
+            The name of the food to be added.
+        quantity : int
+            The quantity of the food to be added.
+
+        Returns
+        -------
+        None
+        """
+        
+        self.foods.append(Food(food_name, quantity))
+        
+        
 
 
 choice = Food("Chewy", "Branded")
