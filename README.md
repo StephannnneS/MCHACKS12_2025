@@ -2,6 +2,8 @@
 
 NOTE: To run the application in its current state from a github repository clone, the sqlite3 database must be downloaded separately. Currently, it can be found here: https://drive.google.com/file/d/1kMPsr0lEPwkSUyMaPHKJWjK0_DbCnLIh/view?usp=sharing
 
+To run the program: download the database, run "pip install -r requirements.txt" in the terminal, and run the "nutrition.py" file.
+
 ### Inspiration  
 Our desire to live healthier lifestyles and track our fitness journeys inspired us to create a user-friendly application that simplifies nutrition tracking and helps users meet their health goals.
 

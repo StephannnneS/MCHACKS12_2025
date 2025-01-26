@@ -89,7 +89,7 @@ class Food:
             else:
                 for elem in self.nutrients.keys():
                     if elem in nutrient[2]:
-                        self.nutrients[elem] = [nutrient[1], nutrient[0]]
+                        self.nutrients[elem][0] = float(nutrient[1])
 
 
 
@@ -171,43 +171,3 @@ class Meal:
             for nutrient_name in food_item.nutrients:
                 self.nutrients[nutrient_name] += round(float(food_item.nutrients[nutrient_name][0]) * quantity, 2) / 100
 
-
-
-
-breakfast = Meal("Breakfast")
-breakfast.add_food("Bread", "Generic", 200)
-breakfast.foods[0][0].get_nutrient_info(breakfast.foods[0][0].food_choices[0])
-breakfast.add_food("Eggs", "Generic", 200)
-breakfast.foods[1][0].get_nutrient_info(breakfast.foods[1][0].food_choices[0])
-breakfast.add_food("Milk", "Generic", 200)
-breakfast.foods[2][0].get_nutrient_info(breakfast.foods[2][0].food_choices[0])
-breakfast.add_food("Cheese", "Generic", 200)
-breakfast.foods[3][0].get_nutrient_info(breakfast.foods[3][0].food_choices[0])
-print(breakfast.nutrients_counter())
-
-dinner = Meal("Dinner")
-dinner.add_food("Steak", "Branded", 200)    
-dinner.foods[0][0].get_nutrient_info(dinner.foods[0][0].food_choices[0])
-dinner.add_food("Potato", "Generic", 2000)    
-dinner.foods[1][0].get_nutrient_info(dinner.foods[1][0].food_choices[0])
-dinner.add_food("Lettuce", "Generic", 100)    
-dinner.foods[2][0].get_nutrient_info(dinner.foods[2][0].food_choices[0])
-print(dinner.nutrients_counter())
-
-Supper = Meal("Supper")
-Supper.add_food("Steak", "Branded", 200)    
-Supper.foods[0][0].get_nutrient_info(Supper.foods[0][0].food_choices[0])   
-Supper.add_food("Potato", "Generic", 2000)    
-Supper.foods[1][0].get_nutrient_info(Supper.foods[1][0].food_choices[0])
-print(Supper.nutrients_counter())
- 
-
-dinner = Meal("Dinner")
-dinner.add_food("Coca-Cola", "Branded", 1)
-dinner.foods[0][0].get_nutrient_info(dinner.foods[0][0].food_choices[0])
-dinner.add_food("Potato", "Generic", 1)
-dinner.foods[1][0].get_nutrient_info(dinner.foods[1][0].food_choices[0])
-dinner.nutrients_counter()
-
-print(dinner.nutrients)
-print(dinner.foods[0][0].food_choices)
