@@ -7,6 +7,7 @@ from User_input_profile import *
 from kivy.uix.popup import Popup
 from Daily_intake import *
 from kivy.uix.spinner import Spinner
+from functools import partial
 
 
 
@@ -53,6 +54,19 @@ class CalculatorScreen(Screen):
         layout.add_widget(self.input2)
 
 
+        self.selected_item_label = Label(
+            text="Selected item will appear here",
+            font_size="10sp",
+            size_hint=(0.8, 0.1),
+            bold = True,
+            pos_hint={'center_x': 0.5, 'y': 0.5}  # Position at the center
+        )
+        layout.add_widget(self.selected_item_label)  # Add label to the layout
+
+
+
+
+
         search_button = Button(
         text="Search",             # Button label
         size_hint=(0.1, 0.08),     # Button size (adjust as needed)
@@ -69,6 +83,7 @@ class CalculatorScreen(Screen):
         )
         layout.add_widget(submit_button)
 
+
         
 
 
@@ -76,9 +91,16 @@ class CalculatorScreen(Screen):
         meal = Food(x, y)
         return meal.food_choices
     
-    def get_the_food_info(self,a,b,c):
-        meal1 = Food(a,b)
-        return meal1.get_nutrient_info(meal1.food_choices[c])
+
+    def get_the_food_info(self, a, b, c):
+        meal1 = Food(a, b)
+        try:
+        # Ensure indexing and fetching are correct
+            return meal1.get_nutrient_info(meal1.food_choices[c])
+        except IndexError:
+        # Handle case where c is out of bounds
+            return "No extra information available"
+
     
 
 
@@ -96,6 +118,15 @@ class CalculatorScreen(Screen):
         # Prepare the popup content
         content = FloatLayout()
 
+        # Create the popup
+        popup = Popup(
+            title="Food List",
+            content=content,
+            size_hint=(0.9, 0.7),
+            auto_dismiss=False
+        )
+
+
         food_list_str = "\n".join([str(item[1:]) for item in food_tuple])
        
 
@@ -112,7 +143,7 @@ class CalculatorScreen(Screen):
                     pos_hint={'center_x': 0.5, 'y': 0.8 - idx * 0.12}  # Stack buttons vertically
                 )
                 # Bind an action to the button (use `partial` to pass parameters if needed)
-                button.bind(on_press=lambda btn: self.handle_button_click(btn, popup)) 
+                button.bind(on_press=partial(self.handle_button_click, popup=popup, index=idx, value1=value1, value2=value2))
                 content.add_widget(button)
 
         # Close Button
@@ -123,13 +154,7 @@ class CalculatorScreen(Screen):
         )
         content.add_widget(close_button)
 
-        # Create the popup
-        popup = Popup(
-            title="Food List",
-            content=content,
-            size_hint=(0.9, 0.7),
-            auto_dismiss=False
-        )
+        
 
         # Bind close button to dismiss the popup
         close_button.bind(on_press=popup.dismiss)
@@ -138,8 +163,18 @@ class CalculatorScreen(Screen):
         popup.open()
 
 
-    def handle_button_click(self, instance):
-        self.selected_item_label.text = f"Selected Item: {instance.text}"
+    def handle_button_click(self, instance, popup, index, value1, value2):
+        extra_info = self.get_the_food_info(value1, value2, index)
+
+        extra_info_str = f" - Extra Info: {extra_info}" if extra_info else ""
+
+        if self.selected_item_label.text == "Selected item will appear here":
+        # Replace the placeholder text with the first item and its info
+            self.selected_item_label.text = f"Selected Item:{instance.text}{extra_info_str}"
+        else:
+        # Append to the existing text
+            self.selected_item_label.text += f"\nSelected Item: {instance.text}{extra_info_str}"
+
         popup.dismiss()
 
 
