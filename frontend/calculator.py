@@ -100,6 +100,7 @@ class CalculatorScreen(Screen):
         submit_button.bind(on_press=self.go_to_summary)
         layout.add_widget(submit_button)
 
+
     
     #def get_the_food1(self, x, y):
         #self.breakfast.add_food(x,y, 500)
@@ -115,7 +116,8 @@ class CalculatorScreen(Screen):
         summary_screen = screen_manager.get_screen("result")
         summary_screen.update_data(self.selected_food_data)
         screen_manager.current = "result"
-
+    
+    
 
     
 
