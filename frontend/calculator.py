@@ -5,6 +5,8 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from User_input_profile import *
 from kivy.uix.popup import Popup
+from Daily_intake import *
+
 
 
 
@@ -88,7 +90,7 @@ class CalculatorScreen(Screen):
         # Prepare the popup content
         content = FloatLayout()
 
-        food_list_str = "\n".join([str(item) for item in food_tuple])
+        food_list_str = "\n".join([str(item) for item in food_tuple[1:]])
 
         # Food Label
         food_label = Label(
