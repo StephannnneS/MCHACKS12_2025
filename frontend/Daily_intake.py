@@ -83,24 +83,34 @@ class Food:
                     nutrient_info = cursor.execute('SELECT name, unit_Name FROM nutrient WHERE id IS ?', (nutrient[0],)).fetchall()
                     self.nutrients[nutrient_info[0][0]] = (nutrient[1], nutrient_info[0][1])
 
-
-
-
-
-class Calorie_calculator:
-    def __init__(self, food_name, quantity):
         
-
-
+    
 class Meal: 
-    def _init__(self, Moment_of_meal, date = 0 ):
+    def __init__(self, Moment_of_meal, date = 0 ):
 
-        Moment_of_meal = self.Moment_of_meal
+        """
+        Initialize a Meal object with the given moment of meal and optional date.
+
+        Parameters
+        ----------
+        Moment_of_meal : str
+            The moment of the meal, e.g. breakfast, lunch, or dinner.
+        date : int
+            An optional date for the meal, defaults to 0.
+
+        Attributes
+        ----------
+        Moment_of_meal : str
+            The moment of the meal, e.g. breakfast, lunch, or dinner.
+        foods : list
+            A list of Food objects that are part of the meal.
+        """
+        self.Moment_of_meal = Moment_of_meal
         self.foods = []
-        pass
+        self.date = date
     
 
-    def add_food(self, food_name, quantity):
+    def add_food(self, food_name,food_type, quantity):
         
         """
         Add a food to the meal.
@@ -116,6 +126,49 @@ class Meal:
         -------
         None
         """
-        
-        self.foods.append(Food(food_name, quantity))
 
+        self.foods.append([Food(food_name, food_type), quantity])
+
+    def remove_food(self, food_name):
+        """
+        Remove a food from the meal.
+
+        Parameters
+        ----------
+        food_name : str
+            The name of the food to be removed.
+
+        Returns
+        -------
+        None
+        """
+        for food in self.foods:
+            if food[0].name == food_name:
+                self.foods.remove(food)
+
+
+    def nutrients_counter(self):
+        self.nutrients = {'Carbohydrate, by difference': 0, 'Fatty acids, total monounsaturated': 0, 'Vitamin B-6': 0,
+                    'Fatty acids, total trans': 0,'Fatty acids, total saturated': 0, 'Total lipid (fat)': 0, 'Calcium, Ca': 0,
+                    'Iron, Fe': 0, 'Protein': 0, 'Energy':  0,'Sugars, Total': 0, 'Sodium, Na': 0, 'Cholesterol': 0, 
+                    'Potassium, K': 0, 'Fiber, total dietary': 0, 'Vitamin A': 0,'Vitamin C, total ascorbic acid': 0}
+
+        for food_item, quantity in self.foods:
+            for nutrient_name in food_item.nutrients:
+                self.nutrients[nutrient_name] += round(float(food_item.nutrients[nutrient_name][0]) * quantity / 100, 2)
+
+
+
+        
+
+
+    
+dinner = Meal("Dinner")
+dinner.add_food("Beef", "Generic", 300)
+dinner.foods[0][0].get_nutrient_info(dinner.foods[0][0].food_choices[0])
+dinner.add_food("Potato", "Generic", 2000)
+dinner.foods[1][0].get_nutrient_info(dinner.foods[1][0].food_choices[0])
+
+dinner.nutrients_counter()
+
+print(dinner.nutrients)
