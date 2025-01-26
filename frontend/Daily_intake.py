@@ -108,7 +108,11 @@ class Meal:
         self.Moment_of_meal = Moment_of_meal
         self.foods = []
         self.date = date
-    
+
+        self.nutrients = {'Carbohydrate, by difference': 0, 'Fatty acids, total monounsaturated': 0, 'Vitamin B-6': 0,
+                    'Fatty acids, total trans': 0,'Fatty acids, total saturated': 0, 'Total lipid (fat)': 0, 'Calcium, Ca': 0,
+                    'Iron, Fe': 0, 'Protein': 0, 'Energy':  0,'Sugars, Total': 0, 'Sodium, Na': 0, 'Cholesterol': 0, 
+                    'Potassium, K': 0, 'Fiber, total dietary': 0, 'Vitamin A': 0,'Vitamin C, total ascorbic acid': 0}
 
     def add_food(self, food_name,food_type, quantity):
         
@@ -148,11 +152,6 @@ class Meal:
 
 
     def nutrients_counter(self):
-        self.nutrients = {'Carbohydrate, by difference': 0, 'Fatty acids, total monounsaturated': 0, 'Vitamin B-6': 0,
-                    'Fatty acids, total trans': 0,'Fatty acids, total saturated': 0, 'Total lipid (fat)': 0, 'Calcium, Ca': 0,
-                    'Iron, Fe': 0, 'Protein': 0, 'Energy':  0,'Sugars, Total': 0, 'Sodium, Na': 0, 'Cholesterol': 0, 
-                    'Potassium, K': 0, 'Fiber, total dietary': 0, 'Vitamin A': 0,'Vitamin C, total ascorbic acid': 0}
-
         for food_item, quantity in self.foods:
             for nutrient_name in food_item.nutrients:
                 self.nutrients[nutrient_name] += round(float(food_item.nutrients[nutrient_name][0]) * quantity / 100, 2)
@@ -172,3 +171,5 @@ dinner.foods[1][0].get_nutrient_info(dinner.foods[1][0].food_choices[0])
 dinner.nutrients_counter()
 
 print(dinner.nutrients)
+print("")
+print("")
