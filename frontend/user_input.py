@@ -44,7 +44,7 @@ class UserInputScreen(Screen):
 
 
         # Sex input (dropdown)
-        self.sex_input = Spinner(text="Select sex", values=("Male", "Female", "Other"),
+        self.sex_input = Spinner(text="Select sex", values=("Male", "Female"),
                                  background_color=(0.8, 0.8, 0.8, 1), color=(0, 0, 0, 1))
         layout.add_widget(Label(text="Sex:", bold=True, font_size="25sp", color=(0, 0, 0, 1)))
         layout.add_widget(self.sex_input)
