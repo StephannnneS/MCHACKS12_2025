@@ -6,6 +6,7 @@ from kivy.uix.button import Button
 from User_input_profile import *
 from kivy.uix.popup import Popup
 from Daily_intake import *
+from kivy.uix.spinner import Spinner
 
 
 
@@ -43,9 +44,9 @@ class CalculatorScreen(Screen):
         layout.add_widget(self.input1)
 
         # Second Input Field
-        self.input2 = TextInput(
-            hint_text="Value 2",
-            multiline=False,
+        self.input2 = Spinner(
+            text="Select Type",
+            values = ("Generic", "Branded"),
             size_hint=(0.25, 0.08),  # Smaller size for the input
             pos_hint={'center_x': 0.65, 'y': 0.7}  # Positioned on the right
         )
@@ -74,6 +75,10 @@ class CalculatorScreen(Screen):
     def get_the_food(self, x, y):
         meal = Food(x, y)
         return meal.food_choices
+    
+    def get_the_food_info(self,a,b,c):
+        meal1 = Food(a,b)
+        return meal1.get_nutrient_info(meal1.food_choices[c])
     
 
 
@@ -107,7 +112,7 @@ class CalculatorScreen(Screen):
                     pos_hint={'center_x': 0.5, 'y': 0.8 - idx * 0.12}  # Stack buttons vertically
                 )
                 # Bind an action to the button (use `partial` to pass parameters if needed)
-                button.bind(on_press=self.handle_button_click)
+                button.bind(on_press=lambda btn: self.handle_button_click(btn, popup)) 
                 content.add_widget(button)
 
         # Close Button
@@ -134,7 +139,8 @@ class CalculatorScreen(Screen):
 
 
     def handle_button_click(self, instance):
-        print(f"Button clicked: {instance.text}")
+        self.selected_item_label.text = f"Selected Item: {instance.text}"
+        popup.dismiss()
 
 
 
