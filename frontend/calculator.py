@@ -17,14 +17,18 @@ from functools import partial
 
 class CalculatorScreen(Screen):
     def __init__(self, **kwargs):
+
+
         super(CalculatorScreen, self).__init__(**kwargs)
+
+        self.selected_food_data = [] 
         
         # Create a vertical BoxLayout
         layout = FloatLayout()
 
 
         breakfast_label = Label(
-            text="Breakfast Menu",
+            text="Day Menu",
             font_size="25sp",
             bold=True,
             pos_hint={'center_x': 0.5, 'y': 0.9},  # Position near the top
@@ -56,7 +60,7 @@ class CalculatorScreen(Screen):
 
         self.selected_item_label = Label(
             text="Selected item will appear here",
-            font_size="10sp",
+            font_size="12sp",
             size_hint=(0.8, 0.1),
             bold = True,
             pos_hint={'center_x': 0.5, 'y': 0.5}  # Position at the center
@@ -81,10 +85,28 @@ class CalculatorScreen(Screen):
             size_hint=(0.2, 0.1),      # Button size (adjust as needed)
             pos_hint={'right': 1, 'y': 0}  # Bottom-right corner
         )
+        submit_button.bind(on_press=self.go_to_summary)
         layout.add_widget(submit_button)
 
+    
+    #def get_the_food1(self, x, y):
+        #self.breakfast.add_food(x,y, 500)
+        #self.breakfast.foods[0][0].food_choices
+    
+    #def addd_the_food(self, x, y):
+        #self.breakfast
 
-        
+
+    def go_to_summary(self, instance):
+        # Get the ScreenManager and navigate to the SummaryScreen
+        screen_manager = self.manager
+        summary_screen = screen_manager.get_screen("result")
+        summary_screen.update_data(self.selected_food_data)
+        screen_manager.current = "result"
+
+
+    
+
 
 
     def get_the_food(self, x, y):
@@ -94,12 +116,8 @@ class CalculatorScreen(Screen):
 
     def get_the_food_info(self, a, b, c):
         meal1 = Food(a, b)
-        try:
-        # Ensure indexing and fetching are correct
-            return meal1.get_nutrient_info(meal1.food_choices[c])
-        except IndexError:
-        # Handle case where c is out of bounds
-            return "No extra information available"
+        meal1.get_nutrient_info(meal1.food_choices[c])
+
 
     
 
@@ -164,16 +182,25 @@ class CalculatorScreen(Screen):
 
 
     def handle_button_click(self, instance, popup, index, value1, value2):
-        
+        # Create a dictionary with value1, value2, and the index
+        selected_data = {
+            "value1": value1,
+            "value2": value2,
+            "index": index,  # Store the index of the selected item
+        }
 
+        # Append the selected data to the list
+        self.selected_food_data.append(selected_data)
+
+        # Update the label to show the selection
         if self.selected_item_label.text == "Selected item will appear here":
-        # Replace the placeholder text with the first item and its info
-            self.selected_item_label.text = f"Selected Item:{instance.text}"
+            self.selected_item_label.text = f"Selected Item: {instance.text}"
         else:
-        # Append to the existing text
             self.selected_item_label.text += f"\nSelected Item: {instance.text}"
 
+        # Close the popup
         popup.dismiss()
+
 
 
 
