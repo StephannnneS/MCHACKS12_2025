@@ -34,6 +34,9 @@ class User:
         AMR = BMR * AMR_scale[self.active_level]
         self.DRI['Energy'] = round(AMR,2)
 
+        self.DRI['Energy'].objective(self.weight, self.goal_weight)
+
+
         # Calculate Carbohydrates DRI (45%-65% of calorie intake, 1 gram carb. = 4 KCAL)
         self.DRI['Carbohydrate'] = round(self.DRI['Energy'] * 0.55 / 4, 2)
         
@@ -61,3 +64,20 @@ class User:
             self.DRI['Sugars'] = 100
         else:
             self.DRI['Sugars'] = 80
+
+    def objective(self, weight, goal_weight):
+        if goal_weight > weight:
+            self.objective = "gain"
+            self.DRI['Energy'] += 500
+        elif goal_weight < weight:
+            self.objective = "lose"
+            self.DRI['Energy'] -= 500
+        else:
+            self.objective = "maintain"
+            self.DRI['Energy'] = self.DRI['Energy']
+    
+
+        
+
+        
+

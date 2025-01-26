@@ -41,19 +41,27 @@ class CalculatorScreen(Screen):
 
         # First Input Field
         self.input1 = TextInput(
-            hint_text="Value 1",
+            hint_text="Food",
             multiline=False,
             size_hint=(0.25, 0.08),  # Smaller size for the input
-            pos_hint={'center_x': 0.35, 'y': 0.7}  # Positioned on the left
+            pos_hint={'center_x': 0.35, 'y': 0.7},  # Positioned on the left
+            background_color=(1, 1, 1, 1),  # White background
+            foreground_color=(0, 0, 0, 1),  # Black font color
+            font_size="14sp",  # Font size
+            font_name="Roboto-Bold"  # Use a bold font
         )
         layout.add_widget(self.input1)
 
         # Second Input Field
         self.input2 = Spinner(
             text="Select Type",
-            values = ("Generic", "Branded"),
+            values=("Generic", "Branded"),
             size_hint=(0.25, 0.08),  # Smaller size for the input
-            pos_hint={'center_x': 0.65, 'y': 0.7}  # Positioned on the right
+            pos_hint={'center_x': 0.65, 'y': 0.7},  # Positioned on the right
+            background_color=(1, 1, 1, 1),  # White background
+            color=(0, 0, 0, 1),  # Black font color
+            font_size="14sp",  # Font size
+            font_name="Roboto-Bold"  # Use a bold font
         )
         layout.add_widget(self.input2)
 
@@ -72,9 +80,12 @@ class CalculatorScreen(Screen):
 
 
         search_button = Button(
-        text="Search",             # Button label
-        size_hint=(0.1, 0.08),     # Button size (adjust as needed)
-        pos_hint={'center_x': 0.875, 'y': 0.7}  # Position next to the second input field
+            text="Search",  # Button label
+            size_hint=(0.1, 0.08),  # Button size
+            pos_hint={'center_x': 0.875, 'y': 0.7},  # Positioned next to the second input field
+            background_color=(1, 1, 1, 1),  # White background
+            color=(0, 0, 0, 1),  # Black font color
+            bold=True,
         )   
         search_button.bind(on_press=self.show_food_popup)
         layout.add_widget(search_button)
@@ -83,7 +94,8 @@ class CalculatorScreen(Screen):
         submit_button = Button(
             text="Submit",             # Button label
             size_hint=(0.2, 0.1),      # Button size (adjust as needed)
-            pos_hint={'right': 1, 'y': 0}  # Bottom-right corner
+            pos_hint={'right': 1, 'y': 0},  # Bottom-right corner
+            bold=True
         )
         submit_button.bind(on_press=self.go_to_summary)
         layout.add_widget(submit_button)
