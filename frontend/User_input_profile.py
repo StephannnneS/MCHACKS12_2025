@@ -137,6 +137,3 @@ class Meal:
         self.food_name = food_name
         self.quantity = quantity
         
-
-
-        
