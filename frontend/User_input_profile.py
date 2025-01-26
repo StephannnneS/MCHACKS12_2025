@@ -71,7 +71,6 @@ class Food:
         Notes
         -----
         Only nutrients whose IDs are in the ESSENTIAL_NUTRIENT_IDS list will be included.
-        Nutrient information is obtained from the database using the fdc_id of the selected food.
         """
 
         self.nutrients = {}
