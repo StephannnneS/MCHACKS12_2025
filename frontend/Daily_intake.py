@@ -202,30 +202,12 @@ Supper.foods[1][0].get_nutrient_info(Supper.foods[1][0].food_choices[0])
 print(Supper.nutrients_counter())
  
 
-
-    
-<<<<<<< HEAD
 dinner = Meal("Dinner")
 dinner.add_food("Coca-Cola", "Branded", 1)
 dinner.foods[0][0].get_nutrient_info(dinner.foods[0][0].food_choices[0])
 dinner.add_food("Potato", "Generic", 1)
 dinner.foods[1][0].get_nutrient_info(dinner.foods[1][0].food_choices[0])
 dinner.nutrients_counter()
-=======
-#dinner = Meal("Dinner")
-#dinner.add_food("Steak", "Branded", 200)
-#dinner.foods[0][0].get_nutrient_info(dinner.foods[0][0].food_choices[0])
-#dinner.add_food("Potato", "Generic", 2000)
-#dinner.foods[1][0].get_nutrient_info(dinner.foods[1][0].food_choices[0])
-#dinner.add_food("Lettuce", "Generic", 100)
-#dinner.foods[2][0].get_nutrient_info(dinner.foods[2][0].food_choices[0])
-#dinner.add_food("Tomato", "Generic", 50)
-#dinner.foods[3][0].get_nutrient_info(dinner.foods[3][0].food_choices[0])
-#dinner.add_food("Cheese", "Generic", 150)
-#dinner.foods[4][0].get_nutrient_info(dinner.foods[4][0].food_choices[0])
-#dinner.add_food("Bread", "Generic", 200)
-#dinner.foods[5][0].get_nutrient_info(dinner.foods[5][0].food_choices[0])
->>>>>>> c4ef90deaa4a603a727ed6aa574069f9f077ae01
 
 print(dinner.nutrients)
 print(dinner.foods[0][0].food_choices)
