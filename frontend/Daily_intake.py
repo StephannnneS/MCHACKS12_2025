@@ -5,16 +5,7 @@ import User_input_profile
 connection = sqlite3.connect("food_db.db")
 cursor = connection.cursor()
 
-# print(cursor.execute('SELECT count(*) FROM food WHERE data_type IN ("sr_legacy_food", "foundation_food") and description like "Beef%";').fetchall())
-
-ESSENTIAL_NUTRIENT_IDS = ("1008", "1005", "1063", "1079", "1093", "1003", "1253", "1004", 
-                              "1257", "1292", "1258", "1087", "1092", "1089", "2067", "1162", "1175")
-
-class Food:
-    #Constants
-    ESSENTIAL_NUTRIENT_IDS = ("1008", "1005", "1063", "1079", "1093", "1003", "1253", "1004", 
-                              "1257", "1292", "1258", "1087", "1092", "1089", "2067", "1162", "1175")
-    
+class Food:    
     def __init__(self, name, food_type):
         """
         Initialize a Food object with the given name and food type, and use the name to locate 
@@ -45,11 +36,15 @@ class Food:
         """
         LIMIT = 8
         self.food_type = food_type
+        self.nutrients = {'Carbohydrate': [0, "G"], 'Unsaturated fats': [0, "G"], 'Vitamin B-6': [0, "mG"],
+                    'Trans fats': [0, "G"],'Saturated fats': [0, "G"], 'Total lipid (fat)': [0, "G"], 'Calcium, Ca': [0, "mG"],
+                    'Iron, Fe': [0, "mG"], 'Protein': [0, "G"], 'Energy':  [0, "KCAL"], 'Sugars': [0, "G"], 'Sodium, Na': [0, "mG"], 'Cholesterol': [0, "mG"], 
+                    'Potassium, K': [0, "mG"], 'Fiber': [0, "G"], 'Vitamin A': [0, "uG"],'Vitamin C': [0, "mG"]}
 
         # Use given food name to locate potential (with a limit) database entries using SQLite
         if self.food_type == "Generic": # If search type is defined as "Generic" foods (Ex: "Chicken")
             self.food_choices = cursor.execute('SELECT fdc_id, description FROM food WHERE data_type IS ? and description like ? LIMIT ?;', 
-                                          ("foundation_food", f"{name}%", LIMIT)).fetchall()
+                                          ("foundation_food", f"%{name}%", LIMIT)).fetchall()
         if self.food_type == "Branded": # If search type is defined as "Branded" foods (Ex: "Sprite")
             self.food_choices = cursor.execute('SELECT fdc_id, description FROM food WHERE data_type IS ? and description like ? LIMIT ?;', 
                                           ("sr_legacy_food", f"%{name}%", LIMIT)).fetchall()
@@ -75,16 +70,35 @@ class Food:
         Nutrient information is obtained from the database using the fdc_id of the selected food.
         """
 
-        self.nutrients = {}
         self.fdc_id = food_choice_info[0]
         self.name = food_choice_info[1]
-        for nutrient in cursor.execute('SELECT nutrient_id, amount FROM food_nutrient WHERE fdc_id IS ?', (str(self.fdc_id),)).fetchall():
-                if nutrient[0] in ESSENTIAL_NUTRIENT_IDS:
-                    nutrient_info = cursor.execute('SELECT name, unit_Name FROM nutrient WHERE id IS ?', (nutrient[0],)).fetchall()
-                    self.nutrients[nutrient_info[0][0]] = (nutrient[1], nutrient_info[0][1])
+
+        sql_query = 'SELECT food_nutrient.nutrient_id, food_nutrient.amount, nutrient.name FROM food_nutrient \
+            JOIN nutrient \
+            ON food_nutrient.nutrient_id = nutrient.id \
+            WHERE food_nutrient.fdc_id IS ? AND (nutrient.name LIKE "%Carbohydrate%" OR nutrient.name LIKE "%monounsaturated%" OR \
+            nutrient.name LIKE "%trans%" OR nutrient.name LIKE "%saturated%" OR nutrient.name LIKE "%lipid%" OR nutrient.name LIKE "%Calcium%" \
+            OR nutrient.name LIKE "%Iron%" OR nutrient.name LIKE "%Protein%" OR nutrient.name LIKE "%Sugars%" OR nutrient.name LIKE "%Sodium%" \
+            OR nutrient.name LIKE "%Cholesterol%" OR nutrient.name LIKE "%Potassium%" OR nutrient.name LIKE "%Fiber%" \
+            OR nutrient.name LIKE "%Vitamin A%" OR nutrient.name LIKE "%Vitamin C%" OR nutrient.name LIKE "%Vitamin B-6%" \
+            OR nutrient.name LIKE "%Energy%");'
+
+        for nutrient in cursor.execute(sql_query, (str(self.fdc_id),)).fetchall():
+            if "unsaturated" in nutrient[2]:
+                self.nutrients['Unsaturated fats'][0] += float(nutrient[1])
+            else:
+                for elem in self.nutrients.keys():
+                    if elem in nutrient[2]:
+                        self.nutrients[elem] = [nutrient[1], nutrient[0]]
 
 
 
+        #for nutrient in cursor.execute('SELECT nutrient_id, amount FROM food_nutrient WHERE fdc_id IS ? ', (str(self.fdc_id),)).fetchall():
+         #       if nutrient[0] in ESSENTIAL_NUTRIENT_IDS:
+          #          nutrient_info = cursor.execute('SELECT name, unit_Name FROM nutrient WHERE id IS ?', (nutrient[0],)).fetchall()
+           #         self.nutrients[nutrient_info[0][0]] = (nutrient[1], nutrient_info[0][1])
+
+        
     
 class Meal: 
     def __init__(self, Moment_of_meal, date = 0 ):
@@ -109,7 +123,11 @@ class Meal:
         self.Moment_of_meal = Moment_of_meal
         self.foods = []
         self.date = date
-    
+
+        self.nutrients = {'Carbohydrate': 0, 'Unsaturated fats': 0, 'Vitamin B-6': 0,
+                    'Trans fats': 0,'Saturated fats': 0, 'Total lipid (fat)': 0, 'Calcium, Ca': 0,
+                    'Iron, Fe': 0, 'Protein': 0, 'Energy':  0,'Sugars': 0, 'Sodium, Na': 0, 'Cholesterol': 0, 
+                    'Potassium, K': 0, 'Fiber': 0, 'Vitamin A': 0,'Vitamin C': 0}
 
     def add_food(self, food_name,food_type, quantity):
         
@@ -149,11 +167,6 @@ class Meal:
 
 
     def nutrients_counter(self):
-        self.nutrients = {'Carbohydrate, by difference': 0, 'Fatty acids, total monounsaturated': 0, 'Vitamin B-6': 0,
-                    'Fatty acids, total trans': 0,'Fatty acids, total saturated': 0, 'Total lipid (fat)': 0, 'Calcium, Ca': 0,
-                    'Iron, Fe': 0, 'Protein': 0, 'Energy':  0,'Sugars, Total': 0, 'Sodium, Na': 0, 'Cholesterol': 0, 
-                    'Potassium, K': 0, 'Fiber, total dietary': 0, 'Vitamin A': 0,'Vitamin C, total ascorbic acid': 0}
-
         for food_item, quantity in self.foods:
             for nutrient_name in food_item.nutrients:
                 self.nutrients[nutrient_name] += round(float(food_item.nutrients[nutrient_name][0]) * quantity / 100, 2)
@@ -164,4 +177,12 @@ class Meal:
 
 
     
+#dinner = Meal("Dinner")
+#dinner.add_food("Coca-Cola", "Branded", 100)
+#dinner.foods[0][0].get_nutrient_info(dinner.foods[0][0].food_choices[0])
+#dinner.add_food("Potato", "Generic", 2000)
+#dinner.foods[1][0].get_nutrient_info(dinner.foods[1][0].food_choices[0])
 
+#dinner.nutrients_counter()
+
+#print(dinner.nutrients)
