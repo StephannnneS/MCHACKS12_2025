@@ -139,8 +139,8 @@ class SummaryScreen(Screen):
                 unit = self.breakfast.foods[0][0].nutrients[nutrient][1]
             nutrient_info += f"{nutrient}: {value} {unit}\n"
         self.nutrient_label.text = nutrient_info
-
+    
     def go_to_next_page(self, instance):
-        # Navigate to the next page
-        screen_manager = self.manager
-        screen_manager.current = "calculator1"
+        graph_screen = self.manager.get_screen('graph')
+        graph_screen.nutrient_info = self.nutrient_label.text
+        self.manager.current = "graph"

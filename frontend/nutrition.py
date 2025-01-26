@@ -7,7 +7,7 @@ from welcome import WelcomeScreen
 from calculator import CalculatorScreen
 from result import *
 from result import SummaryScreen
-from calculator1 import CalculatorScreen1
+from graph import GraphScreen
 
 kivy.require('1.9.0')
 
@@ -36,7 +36,7 @@ class NutritionApp(App):
 
         sm.add_widget(SummaryScreen(name="result"))
 
-        sm.add_widget(SummaryScreen(name="calculator1"))
+        sm.add_widget(GraphScreen(name="graph"))
 
         return sm
 
