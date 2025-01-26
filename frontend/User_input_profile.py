@@ -132,7 +132,7 @@ class User:
 
 class Calorie_calculator:
     def __init__(self, food_name, quantity):
-
+        pass
 
 
 class Meal: 
