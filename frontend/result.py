@@ -4,7 +4,7 @@ from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from Daily_intake import *
-
+from kivy.app import App
 
 class SummaryScreen(Screen):
     def __init__(self, **kwargs):
@@ -24,6 +24,16 @@ class SummaryScreen(Screen):
         self.layout.add_widget(self.dri_label)
 
 
+        self.your_nutrition_label = Label(
+            text="Your Nutrition:",
+            font_size="15sp",
+            bold=True,
+            size_hint=(0.4, 0.08),  # Same size as "Recommended:"
+            pos_hint={'x': 0.05, 'y': 0.75},  # Positioned slightly below
+        )
+        self.layout.add_widget(self.your_nutrition_label)
+
+
 
 
 
@@ -32,7 +42,7 @@ class SummaryScreen(Screen):
             font_size="15sp",
             bold=True,
             size_hint=(0.2, 0.1),  # Takes 40% width and 10% height
-            pos_hint={'x': 0.01, 'y': 0.6},  # Positioned slightly higher
+            pos_hint={'x': 0.011, 'y': 0.6},  # Positioned slightly higher
             
         )
         self.layout.add_widget(self.recommended_label)
@@ -90,13 +100,13 @@ class SummaryScreen(Screen):
         self.layout.add_widget(self.nutrient_label)
 
         # Submit button to go to the next page
-        submit_button = Button(
-            text="Submit",
+        exit_button = Button(
+            text="Exit",
             size_hint=(0.2, 0.1),
             pos_hint={'x': 0.8, 'y': 0.05}  # Bottom-right corner
         )
-        submit_button.bind(on_press=self.go_to_next_page)
-        self.layout.add_widget(submit_button)
+        exit_button.bind(on_press=self.go_to_next_page)
+        self.layout.add_widget(exit_button)
 
         self.add_widget(self.layout)
 
@@ -172,9 +182,7 @@ class SummaryScreen(Screen):
         self.nutrient_label.text = nutrient_info
     
     def go_to_next_page(self, instance):
-        # Navigate to the next page
-        screen_manager = self.manager
-        screen_manager.current = "final"
+        App.get_running_app().stop()
 
 
 
