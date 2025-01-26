@@ -28,6 +28,7 @@ class WelcomeScreen(Screen):
             pos_hint={'center_x': 0.5, 'center_y': 0.7}
         )
 
+
         button = Button(
             text='Get Started',
             size_hint=(0.3, 0.1),
@@ -49,4 +50,4 @@ class WelcomeScreen(Screen):
         self.bg.pos = self.pos
 
     def switch_to_second_screen(self, instance):
-        self.manager.current = 'user_input'  
+        self.manager.current = 'user_input'

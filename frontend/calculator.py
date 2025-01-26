@@ -57,14 +57,28 @@ class CalculatorScreen(Screen):
         )   
         layout.add_widget(search_button)
 
+
+        submit_button = Button(
+            text="Submit",             # Button label
+            size_hint=(0.2, 0.1),      # Button size (adjust as needed)
+            pos_hint={'right': 1, 'y': 0}  # Bottom-right corner
+        )
+        layout.add_widget(submit_button)
+
+
+
+
+
+
+    def get_the_food(x,y):
+        meal = Food(x,y)
+        choices = meal.food_choices
+
         
 
-        x = "milk"
-        y = 'generic'
+        
 
-        def find_food(x,y):
-            choice = Food(x,y)
-
+    
 
 
         
