@@ -17,9 +17,8 @@ class SummaryScreen(Screen):
             text="No DRI data yet.",
             font_size="14sp",
             size_hint=(0.4, 0.8),  # Takes 40% width and 80% height
-            pos_hint={'x': 0.05, 'y': 0.05},  # Positioned on the left
-            halign="left",
-            valign="top",
+            pos_hint={'x': 0.05, 'y': 0.1},  # Positioned on the left
+            
         )
         self.dri_label.bind(size=self.dri_label.setter('text_size'))  # Enable text wrapping
         self.layout.add_widget(self.dri_label)
@@ -32,10 +31,9 @@ class SummaryScreen(Screen):
             text="Recommended:",
             font_size="15sp",
             bold=True,
-            size_hint=(0.4, 0.1),  # Takes 40% width and 10% height
-            pos_hint={'x': 0.03, 'y': 0.6},  # Positioned slightly higher
-            halign="left",
-            valign="top",
+            size_hint=(0.2, 0.1),  # Takes 40% width and 10% height
+            pos_hint={'x': 0.01, 'y': 0.6},  # Positioned slightly higher
+            
         )
         self.layout.add_widget(self.recommended_label)
 
