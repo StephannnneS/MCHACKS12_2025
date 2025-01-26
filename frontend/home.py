@@ -3,6 +3,7 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.graphics import Color, Rectangle
+
  
 
 class HomeScreen(Screen):
@@ -36,8 +37,9 @@ class HomeScreen(Screen):
 
         self.info_label = Label(
             text="info here",
-            font_size='20sp',  # Standard size for user info
+            font_size='24sp',  # Standard size for user info
             halign="center",
+            bold = True,
             valign="middle"
         )
         self.info_label.bind(size=self.info_label.setter('text_size'))  # Enable text wrapping
@@ -83,7 +85,6 @@ class HomeScreen(Screen):
     def update_info(self, age, sex, height, weight, goal_weight):
         """Update the screen with user-provided data."""
         self.info_label.text = (
-            f"User Information:\n"
             f"Age: {age}\n"
             f"Sex: {sex}\n"
             f"Height: {height} cm\n"

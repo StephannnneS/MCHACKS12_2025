@@ -1,12 +1,12 @@
 class User:
     def __init__(self, name = "Default User", height = 170, weight = 70, sex = "male", age = 20, active_level = 2, goal_weight = 70):
         self.name = name
-        self.height = height
-        self.weight = weight
+        self.height = float(height) 
+        self.weight = float(weight)
         self.sex = sex
-        self.age = age
+        self.age = int(age)
         self.active_level = active_level
-        self.goal_weight = goal_weight
+        self.goal_weight = float(goal_weight)
         self.set_user_DRI()
 
 
@@ -24,15 +24,18 @@ class User:
         
         # Calculate User's desired daily calorie intake
         # Calculate Base Metabolism Rate (BMR)
-        if self.sex == "male":
+        if self.sex == "Male":
             BMR = round(66.47 + (13.75 * self.weight) + (5.003 * self.height) - (6.755 * self.age), 2)
-        elif self.sex == "female":
+        elif self.sex == "Female":
             BMR = round(655.1 + (9.563 * self.weight) + (1.850 * self.height) - (4.676 * self.age), 2)
 
         # Calculate Active Metabolism Rate (AMR)
         AMR_scale = (1.2, 1.375, 1.55, 1.725, 1.9)
         AMR = BMR * AMR_scale[self.active_level]
         self.DRI['Energy'] = round(AMR,2)
+
+        self.set_objective(self.weight, self.goal_weight)
+
 
         # Calculate Carbohydrates DRI (45%-65% of calorie intake, 1 gram carb. = 4 KCAL)
         self.DRI['Carbohydrate'] = round(self.DRI['Energy'] * 0.55 / 4, 2)
@@ -61,3 +64,20 @@ class User:
             self.DRI['Sugars'] = 100
         else:
             self.DRI['Sugars'] = 80
+
+    def set_objective(self, weight, goal_weight):
+        if goal_weight > weight:
+            self.objective = "gain"
+            self.DRI['Energy'] += 500
+        elif goal_weight < weight:
+            self.objective = "lose"
+            self.DRI['Energy'] -= 500
+        else:
+            self.objective = "maintain"
+            self.DRI['Energy'] = self.DRI['Energy']
+    
+
+        
+
+        
+
