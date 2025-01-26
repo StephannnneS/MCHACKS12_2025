@@ -25,6 +25,9 @@ class Food:
         (self.fdc_id, self.name) = food_choices[int(input("choose 1-10: ")) - 1]
         print(self.name, self.fdc_id)
 
+        
+
+
 test1 = Food("Milk", "Generic",  4)
 print((test1.fdc_id))
 nutrients = cursor.execute('SELECT * from food_nutrient WHERE fdc_id IS "322228" LIMIT 5').fetchall()
@@ -33,7 +36,7 @@ nutrients = cursor.execute('SELECT nutrient_id FROM food_nutrient WHERE fdc_id I
 print(nutrients)
 
 class User:
-    def __init__(self, name = "", height = 0, weight = 0, gender = "", age = 0, active_level = 0, goal_weight = 0):
+    def __init__(self, name = "", height = 0, weight = 0, sex = "", age = 0, active_level = 0, goal_weight = 0):
 
         if not self.is_valid_name(name):
             raise ValueError("Invalid name")
@@ -52,7 +55,7 @@ class User:
             raise ValueError("Invalid input! Please enter a number.")
         self.age = age
         
-        self.gender = self.is_gender(gender)
+        self.sex = self.is_sex(sex)
 
         self.active_level = self.activity_level(active_level)
 
@@ -99,11 +102,11 @@ class User:
 
         return goal_weight
 
-    def is_gender(self, gender):
-        if gender.isalpha():
-            if gender == "male":
+    def is_sex(self, sex):
+        if sex.isalpha():
+            if sex == "male":
                 return "male"
-            elif gender == "female":
+            elif sex == "female":
                 return "female"
             else:
                 return "other"
@@ -126,7 +129,6 @@ class User:
 
 class Calorie_calculator:
     def __init__(self, food_name, quantity):
-        self.food_name = food_name
 
 
         
