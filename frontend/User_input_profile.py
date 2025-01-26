@@ -17,10 +17,10 @@ class User:
 
     def set_user_DRI(self):
         # Set the user's diatery reference intakes
-        self.DRI = {'Energy':  0, 'Carbohydrate, by difference': 0, 'Sugars, Total': 0, 'Fiber, total dietary': 0, 'Total lipid (fat)': 0, 
-                    'Fatty acids, total trans': 2.2, 'Fatty acids, total saturated': 15, 'Fatty acids, total monounsaturated': 0,
-                    'Protein': 0,  'Sodium, Na': 1500, 'Cholesterol': 300, 'Calcium, Ca': 1000, 'Iron, Fe': 8, 'Potassium, K': 3400, 
-                    'Vitamin A': 900, 'Vitamin B-6': 1.3, 'Vitamin C, total ascorbic acid': 90}
+        self.DRI = {'Carbohydrate': 0, 'Unsaturated fats': 0, 'Vitamin B-6': 1.3,
+                    'Trans fats': 2.2,'Saturated fats': 15, 'Total lipid (fat)': 0, 'Calcium, Ca': 1000,
+                    'Iron, Fe': 8, 'Protein': 0, 'Energy':  0,'Sugars': 0, 'Sodium, Na': 1500, 'Cholesterol': 300, 
+                    'Potassium, K': 3400, 'Fiber': 0, 'Vitamin A': 900,'Vitamin C': 90}
         
         # Calculate User's desired daily calorie intake
         # Calculate Base Metabolism Rate (BMR)
@@ -32,10 +32,10 @@ class User:
         # Calculate Active Metabolism Rate (AMR)
         AMR_scale = (1.2, 1.375, 1.55, 1.725, 1.9)
         AMR = BMR * AMR_scale[self.active_level]
-        self.DRI['Energy'] = AMR
+        self.DRI['Energy'] = round(AMR,2)
 
         # Calculate Carbohydrates DRI (45%-65% of calorie intake, 1 gram carb. = 4 KCAL)
-        self.DRI['Carbohydrate, by difference'] = round(self.DRI['Energy'] * 0.55 / 4, 2)
+        self.DRI['Carbohydrate'] = round(self.DRI['Energy'] * 0.55 / 4, 2)
         
         # Calculate Protein DRI (Adult: 10%-35% of calorie intake, Child: 10%-30% of calorie intake, 1 gram protein = 4 KCAL)
         if self.age >= 18:
@@ -50,17 +50,14 @@ class User:
             self.DRI['Total lipid (fat)'] = round(self.DRI['Energy'] * 0.3 / 4, 2)
 
         # Calculate Fiber DRI (14 gram per 1000 KCAL)
-        self.DRI['Fiber, total dietary'] = round(self.DRI['Energy'] * 14 / 1000, 2)
+        self.DRI['Fiber'] = round(self.DRI['Energy'] * 14 / 1000, 2)
 
         # Calculate unsaturated fat DRI
-        self.DRI['Fatty acids, total monounsaturated'] = round(self.DRI['Total lipid (fat)'] - self.DRI['Fatty acids, total saturated'] \
-                                                            - self.DRI['Fatty acids, total trans'], 2)
+        self.DRI['Unsaturated fats'] = round(self.DRI['Total lipid (fat)'] - self.DRI['Saturated fats'] \
+                                                            - self.DRI['Trans fats'], 2)
         
         # Calculate sugar DRI
         if self.age >= 18:
-            self.DRI['Sugars, Total'] = 100
+            self.DRI['Sugars'] = 100
         else:
-            self.DRI['Sugars, Total'] = 80
-   
-user1 = User(weight=1000)
-print(user1.DRI)
+            self.DRI['Sugars'] = 80
