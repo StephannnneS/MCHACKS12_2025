@@ -119,3 +119,6 @@ class Meal:
         
         self.foods.append(Food(food_name, quantity))
 
+test1 = Food("Milk", "Generic")
+test1.get_nutrient_info(test1.food_choices[0])
+print(test1.nutrients)
