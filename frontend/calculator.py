@@ -4,7 +4,7 @@ from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from User_input_profile import *
-
+from kivy.uix.popup import Popup
 
 
 
@@ -55,6 +55,7 @@ class CalculatorScreen(Screen):
         size_hint=(0.1, 0.08),     # Button size (adjust as needed)
         pos_hint={'center_x': 0.875, 'y': 0.7}  # Position next to the second input field
         )   
+        search_button.bind(on_press=self.show_food_popup)
         layout.add_widget(search_button)
 
 
@@ -65,22 +66,58 @@ class CalculatorScreen(Screen):
         )
         layout.add_widget(submit_button)
 
-
-
-
-
-
-    def get_the_food(x,y):
-        meal = Food(x,y)
-        choices = meal.food_choices
-
         
 
-        
 
-    
+    def get_the_food(self, x, y):
+        meal = Food(x, y)
+        return meal.food_choices
 
 
-        
+    def show_food_popup(self, instance):
+        # Get input values
+        value1 = self.input1.text
+        value2 = self.input2.text
 
-        
+        # Get the food list
+        food_tuple = self.get_the_food(value1, value2)
+
+        if not food_tuple:
+            food_tuple = ("No food items found",)
+
+        # Prepare the popup content
+        content = FloatLayout()
+
+        food_list_str = "\n".join([str(item) for item in food_tuple])
+
+        # Food Label
+        food_label = Label(
+            text=f"Here are the food items:\n{food_list_str}",
+            size_hint=(0.8, 0.6),
+            pos_hint={'center_x': 0.5, 'center_y': 0.7},  # Positioned at the top center
+            halign='center',
+            valign='top'
+        )
+        content.add_widget(food_label)
+
+        # Close Button
+        close_button = Button(
+            text="Close",
+            size_hint=(0.4, 0.2),  # Smaller button
+            pos_hint={'center_x': 0.5, 'center_y': 0.2}  # Positioned at the bottom center
+        )
+        content.add_widget(close_button)
+
+        # Create the popup
+        popup = Popup(
+            title="Food List",
+            content=content,
+            size_hint=(0.8, 0.5),
+            auto_dismiss=False
+        )
+
+        # Bind close button to dismiss the popup
+        close_button.bind(on_press=popup.dismiss)
+
+        # Open the popup
+        popup.open()
