@@ -62,3 +62,5 @@ class User:
         else:
             self.DRI['Sugars, Total'] = 80
    
+user1 = User(weight=1000)
+print(user1.DRI)
