@@ -74,6 +74,7 @@ class CalculatorScreen(Screen):
     def get_the_food(self, x, y):
         meal = Food(x, y)
         return meal.food_choices
+    
 
 
     def show_food_popup(self, instance):
@@ -134,3 +135,7 @@ class CalculatorScreen(Screen):
 
     def handle_button_click(self, instance):
         print(f"Button clicked: {instance.text}")
+
+
+
+#hihi
