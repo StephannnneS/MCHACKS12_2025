@@ -6,7 +6,6 @@ from kivy.uix.button import Button
 from Daily_intake import *
 from kivy.app import App
 
-
 class SummaryScreen(Screen):
     def __init__(self, **kwargs):
         super(SummaryScreen, self).__init__(**kwargs)
@@ -25,6 +24,16 @@ class SummaryScreen(Screen):
         self.layout.add_widget(self.dri_label)
 
 
+        self.your_nutrition_label = Label(
+            text="Your Nutrition:",
+            font_size="15sp",
+            bold=True,
+            size_hint=(0.4, 0.08),  # Same size as "Recommended:"
+            pos_hint={'x': 0.05, 'y': 0.75},  # Positioned slightly below
+        )
+        self.layout.add_widget(self.your_nutrition_label)
+
+
 
 
 
@@ -33,7 +42,7 @@ class SummaryScreen(Screen):
             font_size="15sp",
             bold=True,
             size_hint=(0.2, 0.1),  # Takes 40% width and 10% height
-            pos_hint={'x': 0.01, 'y': 0.6},  # Positioned slightly higher
+            pos_hint={'x': 0.011, 'y': 0.6},  # Positioned slightly higher
             
         )
         self.layout.add_widget(self.recommended_label)
