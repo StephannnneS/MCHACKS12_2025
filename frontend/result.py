@@ -49,6 +49,18 @@ class SummaryScreen(Screen):
 
 
 
+        # Label to display the current dictionary
+
+
+        self.data_label = Label(
+        text="No data yet.",
+        font_size="16sp",
+        bold=True,
+        size_hint=(0.9, 0.1),
+        pos_hint={'center_x': 0.5, 'top': 1}  # Top alignment
+        )
+        self.layout.add_widget(self.data_label)
+
 
 
 
@@ -59,16 +71,7 @@ class SummaryScreen(Screen):
         self.data = []  # Store dictionaries
         self.extra_click_allowed = False  # Track if one extra click is allowed after processing items
 
-        # Label to display the current dictionary
-        self.data_label = Label(
-            text="No data yet.",
-            font_size="16sp",
-            bold=True,
-            size_hint=(0.9, 0.1),
-            pos_hint={'center_x': 0.5, 'y': 1.4},
-            halign="left"
-        )
-        self.layout.add_widget(self.data_label)
+        
 
         # Input field to take user input for weight
         self.weight_input = TextInput(
